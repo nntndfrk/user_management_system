@@ -1,0 +1,33 @@
+<div class="login-wrapper">
+  <form class="login" (ngSubmit)="login()">
+    <section class="title">
+      <h3 class="welcome">We welcome you</h3>
+      in the company accounting system
+      <h5 class="hint">You must be logged for working with the system.</h5>
+    </section>
+    <div class="login-group">
+
+      <input
+        class="username"
+        type="text"
+        id="login_username"
+        placeholder="Login"
+        name="name"
+        [(ngModel)]="credentials.username"
+      >
+      <input
+        class="password"
+        type="password"
+        id="login_password"
+        placeholder="Password"
+        name="password"
+        [(ngModel)]="credentials.password"
+      >
+
+      <div class="error active" *ngIf="errorMessage">
+        {{ errorMessage }}
+      </div>
+      <button type="submit" class="btn btn-primary">Log in</button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,129 @@
+<form [formGroup]="userForm" (ngSubmit)="createUser()">
+  <section class="form-block">
+    <div class="btn-group">
+      <a (click)="goBack()" class="btn btn-icon">
+        <clr-icon shape="undo"></clr-icon>
+        <span>&nbsp;Back</span>
+      </a>
+    </div>
+    <br/>
+    <label>Create a new employee</label>
+
+    <div class="form-group">
+      <label for="firstname" class="required">First Name</label>
+      <label
+        for="firstname"
+        aria-haspopup="true"
+        role="tooltip"
+        class="tooltip tooltip-validation tooltip-sm"
+        [ngClass]="{ invalid: f.firstname.invalid &&
+                     (f.firstname.touched && f.firstname.dirty) }"
+      >
+        <input
+          type="text"
+          id="firstname"
+          size="35"
+          formControlName="firstname"
+          required
+          autocomplete="off"
+        >
+        <span class="tooltip-content" *ngIf="f.firstname.errors?.required">
+          firstname field cannot be empty
+        </span>
+        <span class="tooltip-content" *ngIf="f.firstname.errors?.minlength">
+          field length > 2
+        </span>
+      </label>
+    </div>
+    <div class="form-group">
+      <label for="lastname" class="required">Last name</label>
+      <label
+        for="lastname"
+        aria-haspopup="true"
+        role="tooltip"
+        class="tooltip tooltip-validation tooltip-sm"
+        [ngClass]="{invalid: f.lastname.invalid &&
+                    (f.lastname.touched && f.lastname.dirty)}"
+      >
+        <input
+          type="text"
+          id="lastname"
+          size="35"
+          formControlName="lastname"
+          required
+          autocomplete="off"
+        >
+        <span class="tooltip-content" *ngIf="f.lastname.errors?.required">
+          lastname field cannot be empty
+        </span>
+        <span class="tooltip-content" *ngIf="f.lastname.errors?.minlength">
+          field length > 2
+        </span>
+      </label>
+
+    </div>
+    <div class="form-group">
+      <label for="email" class="required">E-mail</label>
+      <label
+        for="email"
+        aria-haspopup="true"
+        role="tooltip"
+        class="tooltip tooltip-validation tooltip-sm"
+        [ngClass]="{invalid: f.email.invalid &&
+                    (f.email.touched && f.email.dirty )}"
+      >
+        <input
+          type="email"
+          id="email"
+          size="35"
+          formControlName="email"
+          required
+          autocomplete="off"
+        >
+        <ng-container *ngIf="f.email.invalid">
+          <span class="tooltip-content" *ngIf="f.email.errors?.required">
+            e-mail field cannot be empty
+          </span>
+          <span class="tooltip-content" *ngIf="f.email.errors?.email">
+            non-valid email format
+          </span>
+        </ng-container>
+      </label>
+
+    </div>
+
+    <div class="form-group">
+      <label for="email" class="required">Password</label>
+      <label
+        for="email"
+        aria-haspopup="true"
+        role="tooltip"
+        class="tooltip tooltip-validation tooltip-sm"
+        [ngClass]="{invalid: f.password.invalid &&
+                    (f.password.touched && f.password.dirty )}"
+      >
+        <input
+          type="text"
+          id="password"
+          size="35"
+          formControlName="password"
+          required
+          autocomplete="off"
+        >
+        <span class="tooltip-content" *ngIf="f.password.errors?.required">
+          password field cannot be empty
+        </span>
+        <span class="tooltip-content" *ngIf="f.password.errors?.minlength">
+          field length > 6
+        </span>
+      </label>
+
+    </div>
+    <button
+      class="btn btn-primary"
+      type="submit"
+      [disabled]="userForm.invalid"
+    >Create employee
+    </button>
+  </section>
+</form>

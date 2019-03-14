@@ -1,0 +1,29 @@
+<div *ngIf="user">
+  <div class="clr-row clr-justify-content-center">
+    <div class="clr-col-lg-6 clr-col-12">
+      <div class="btn-group">
+        <a (click)="goBack()" class="btn btn-icon">
+          <clr-icon shape="undo"></clr-icon>
+          <span>&nbsp;Back</span>
+        </a>
+      </div>
+      <br/>
+      <img
+        [src]="user.avatar"
+        class="img-rounded"
+        [attr.alt]="user.firstname + user.lastname"
+        [attr.title]="user.firstname + user.lastname"
+      >
+      <p>{{ user.firstname }}</p>
+      <p>{{ user.lastname }}</p>
+      <p>{{ user.email }}</p>
+      <p>{{ user.job }}</p>
+      <p>{{ user.createdAt | date }}</p>
+      <div class="btn-group">
+        <a [routerLink]="['/users', user.id, 'edit']" class="btn btn-primary btn-sm">Edit</a>
+        <a (click)="deleteUser()" class="btn btn-danger btn-sm">Delete</a>
+      </div>
+    </div>
+  </div>
+
+</div>
