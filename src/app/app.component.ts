@@ -1,4 +1,8 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
+import {Router} from '@angular/router';
+
+import {AuthService} from './core/services/auth.service';
+import {MessagesService} from './core/services/messages.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +10,29 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'user-app-ivs';
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private msgService: MessagesService
+  ) {
+  }
+
+  get isLoggedIn() {
+    return this.authService.isLoggedIn();
+  }
+
+  logOut() {
+    this.router.navigate(['/login'])
+      .then((isNavigate) => {
+        if (isNavigate) {
+          this.authService.logout();
+        }
+      })
+      .catch((err) => {
+        this.msgService.setMessage({
+          type: 'danger',
+          body: err
+        });
+      });
+  }
 }
