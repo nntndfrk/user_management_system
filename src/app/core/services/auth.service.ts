@@ -5,6 +5,7 @@ import {retry, tap} from 'rxjs/operators';
 
 @Injectable()
 export class AuthService {
+  // use fake api reqres.in
   private authUrl = 'https://reqres.in/api';
   private loggedIn = false;
 
