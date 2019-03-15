@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {ClarityModule} from '@clr/angular';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {ReactiveFormsModule} from '@angular/forms';
 
 import {UsersRoutingModule} from './users-routing.module';
 import {UsersComponent} from './users.component';
@@ -19,7 +19,6 @@ import {SharedModule} from '../shared/shared.module';
     CommonModule,
     ClarityModule,
     ReactiveFormsModule,
-    FormsModule,
     SharedModule,
     UsersRoutingModule,
   ],

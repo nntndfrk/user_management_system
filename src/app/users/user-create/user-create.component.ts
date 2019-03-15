@@ -44,7 +44,7 @@ export class UserCreateComponent implements OnInit {
     });
 
     this.userForm.valueChanges.subscribe(() => {
-        if (this.f.touched || this.f.dirty) {
+        if (this.userForm.touched || this.userForm.dirty) {
           this.editInProgress = true;
         }
       }

@@ -1,33 +1,64 @@
 <div class="login-wrapper">
-  <form class="login" (ngSubmit)="login()">
+  <form class="login" [formGroup]="loginForm" (ngSubmit)="login()">
     <section class="title">
       <h3 class="welcome">We welcome you</h3>
       in the company accounting system
       <h5 class="hint">You must be logged for working with the system.</h5>
     </section>
     <div class="login-group">
-
-      <input
-        class="username"
-        type="text"
-        id="login_username"
-        placeholder="Login"
-        name="name"
-        [(ngModel)]="credentials.username"
+      <label
+        for="email"
+        aria-haspopup="true"
+        role="tooltip"
+        class="tooltip tooltip-validation tooltip-sm"
+        [ngClass]="{invalid: f.email.invalid &&
+                    (f.email.touched && f.email.dirty)}"
       >
-      <input
-        class="password"
-        type="password"
-        id="login_password"
-        placeholder="Password"
-        name="password"
-        [(ngModel)]="credentials.password"
-      >
+        <input
+          class="username"
+          type="text"
+          id="email"
+          placeholder="Email"
+          name="name"
+          formControlName="email"
+          required
+          autocomplete="off"
+        >
+        <span class="tooltip-content" *ngIf="f.email.errors?.required">
+          email field cannot be empty
+        </span>
+        <span class="tooltip-content" *ngIf="f.email.errors?.email">
+          non-valid email format
+        </span>
+      </label>
 
-      <div class="error active" *ngIf="errorMessage">
-        {{ errorMessage }}
-      </div>
-      <button type="submit" class="btn btn-primary">Log in</button>
+      <label
+        for="password"
+        aria-haspopup="true"
+        role="tooltip"
+        class="tooltip tooltip-validation tooltip-sm"
+        [ngClass]="{invalid: f.password.invalid &&
+                    (f.password.touched && f.password.dirty)}"
+      >
+        <input
+          class="password"
+          type="password"
+          id="password"
+          placeholder="Password"
+          name="password"
+          formControlName="password"
+          required
+          autocomplete="off"
+        >
+        <span class="tooltip-content" *ngIf="f.password.errors?.required">
+          password field cannot be empty
+        </span>
+        <span class="tooltip-content" *ngIf="f.password.errors?.minlength">
+          field length > 6
+        </span>
+      </label>
+
+      <button type="submit" class="btn btn-primary" [disabled]="loginForm.invalid">Log in</button>
     </div>
   </form>
 </div>

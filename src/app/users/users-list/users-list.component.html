@@ -1,40 +1,43 @@
-<div class="jumbotron text-center">
-  <h2>Users list</h2>
+<ng-container *ngIf="users; else spinner">
+  <div class="jumbotron text-center">
+    <h2>Users list</h2>
 
-  <a routerLink="/users/create" class="btn btn-sm btn-info">Create user</a>
-</div>
+    <a routerLink="/users/create" class="btn btn-sm btn-info">Create user</a>
+  </div>
 
-<div class="clr-row clr-justify-content-center" *ngIf="users; else spinner">
-  <div class="clr-col-lg-6 clr-col-12">
-    <div class="card" *ngFor="let user of users">
-      <div class="card-header">{{ user.firstname }} {{ user.lastname }}</div>
-      <div class="card-block">
-        <div class="card-media-block">
-          <img
-            [src]="user.avatar"
-            [attr.alt]="user.firstname + ' ' + user.lastname"
-            [attr.title]="user.firstname + ' ' + user.lastname"
-            class="card-media-image"
-          />
-          <div class="card-media-description">
+  <div class="clr-row clr-justify-content-center">
+    <div class="clr-col-lg-6 clr-col-12">
+      <div class="card" *ngFor="let user of users">
+        <div class="card-header">{{ user.firstname }} {{ user.lastname }}</div>
+        <div class="card-block">
+          <div class="card-media-block">
+            <img
+              [src]="user.avatar"
+              [attr.alt]="user.firstname + ' ' + user.lastname"
+              [attr.title]="user.firstname + ' ' + user.lastname"
+              class="card-media-image"
+            />
+            <div class="card-media-description">
             <span class="card-media-text">
               <span class="label label-purple">{{ user.email }}</span>
             </span>
-            <span class="card-media-text"> <b>Job:</b> {{ user.job }} </span>
+              <span class="card-media-text"> <b>Job:</b> {{ user.job }} </span>
+            </div>
+          </div>
+          <div class="card-text">
+            {{ user.description }}
           </div>
         </div>
-        <div class="card-text">
-          {{ user.description }}
+        <div class="card-footer">
+          <button class="btn btn-sm btn-link" [routerLink]="['/users', user.id]">
+            View full
+          </button>
         </div>
-      </div>
-      <div class="card-footer">
-        <button class="btn btn-sm btn-link" [routerLink]="['/users', user.id]">
-          View full
-        </button>
       </div>
     </div>
   </div>
-</div>
+</ng-container>
+
 <ng-template #spinner>
   <div class="clr-row clr-justify-content-center">
     <div class="clr-col-lg-6 clr-col-12">

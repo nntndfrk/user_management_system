@@ -2,16 +2,19 @@ import {Injectable} from '@angular/core';
 import {CanDeactivate} from '@angular/router';
 import {MessagesService} from '../services/messages.service';
 import {Observable, of} from 'rxjs';
-import {UserEditComponent} from '../../users/user-edit/user-edit.component';
+
+export interface CanComponentDeactivate {
+  editInProgress: () => Observable<boolean> | Promise<boolean> | boolean;
+}
 
 @Injectable({
   providedIn: 'root'
 })
-export class CanDeactivateGuard implements CanDeactivate<any> {
+export class CanDeactivateGuard implements CanDeactivate<CanComponentDeactivate> {
   constructor(private msgService: MessagesService) {
   }
 
-  canDeactivate(component: UserEditComponent): Observable<boolean> {
+  canDeactivate(component: CanComponentDeactivate): Observable<boolean> {
     if (component.editInProgress) {
       this.msgService.setMessage({
         type: 'warning',

@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {MessagesService} from '../core/services/messages.service';
 import {AuthService} from '../core/services/auth.service';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -9,37 +10,58 @@ import {AuthService} from '../core/services/auth.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  credentials = {username: '', password: ''};
-  errorMessage = '';
+
+  loginForm: FormGroup;
+
   constructor(
     private authService: AuthService,
     private router: Router,
     private msgService: MessagesService
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
     const isLogin = this.authService.isLoggedIn();
     if (isLogin) {
       this.router.navigate(['/users']);
     }
+
+    this.loginForm = new FormGroup({
+      email: new FormControl('GavinBelson@hooli.xyz',
+        [
+          Validators.required,
+          Validators.email,
+        ]
+      ),
+      password: new FormControl('',
+        [
+          Validators.required,
+          Validators.minLength(6)
+        ]
+      )
+    });
+  }
+
+  get f() {
+    return this.loginForm.controls;
   }
 
   login() {
-    this.errorMessage = '';
 
-    this.authService.login(this.credentials.username, this.credentials.password)
-      .subscribe(
+    this.authService.login(
+      this.f.email.value,
+      this.f.password.value
+    ).subscribe(
         () => {
           this.msgService.setMessage({
             type: 'success',
-            body: `${this.credentials.username}, You successfully logged in system. Welcome!`
+            body: `${this.f.email.value}, You successfully logged in system. Welcome!`
           });
           setTimeout(() => {
             this.router.navigate(['/users']);
-          }, 2000);
+          }, 1000);
         },
         err => {
-          this.errorMessage = err.error.error;
           this.msgService.setMessage({
             type: 'danger',
             body: err.error.error

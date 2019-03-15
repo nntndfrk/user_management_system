@@ -22,7 +22,8 @@ const routes: Routes = [
       },
       {
         path: 'create',
-        component: UserCreateComponent
+        component: UserCreateComponent,
+        canDeactivate: [CanDeactivateGuard]
       },
       {
         path: ':id',

@@ -9,7 +9,6 @@ export class AuthService {
   private loggedIn = false;
 
   constructor(private http: HttpClient) {
-    // при обновлении страницы смотрим в localStorage чтоб проверить есть ли токен
     this.loggedIn = !!localStorage.getItem('auth_token');
   }
 
