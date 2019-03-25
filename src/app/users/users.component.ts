@@ -8,11 +8,12 @@ import {MessagesService} from '../core/services/messages.service';
   styleUrls: ['./users.component.css']
 })
 export class UsersComponent implements OnInit {
-
+  private msgService;
   constructor(
     private activatedRoute: ActivatedRoute,
-    private msgService: MessagesService
+    msgService: MessagesService
   ) {
+    this.msgService = msgService;
   }
 
   ngOnInit() {

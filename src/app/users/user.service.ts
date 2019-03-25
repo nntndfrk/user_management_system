@@ -7,7 +7,7 @@ import {User} from '../core/models/user';
 
 @Injectable()
 export class UserService {
-  private usersUrl = 'https://5c8a58770861d300146f73ad.mockapi.io/users';
+  private usersUrl = 'api/employees';
 
   constructor(private http: HttpClient) {
   }
@@ -18,12 +18,12 @@ export class UserService {
     headers.set('Content-Type', 'application/json');
 
     return this.http.get<User[]>(this.usersUrl, {headers}).pipe(
-      delay(1000)
+      delay(0)
     );
 
   }
 
-  getUser(id: number): Observable<User> {
+  getUser(id: string): Observable<User> {
     return this.http.get<User>(`${this.usersUrl}/${id}`);
   }
 
@@ -32,10 +32,10 @@ export class UserService {
   }
 
   updateUser(upUser: User): Observable<User> {
-    return this.http.put<User>(`${this.usersUrl}/${upUser.id}`, upUser);
+    return this.http.put<User>(`${this.usersUrl}/${upUser._id}`, upUser);
   }
 
-  deleteUser(id: number) {
+  deleteUser(id: string) {
     return this.http.delete(`${this.usersUrl}/${id}`)
       .pipe(
         retry(2)

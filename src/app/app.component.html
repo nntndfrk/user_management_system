@@ -30,6 +30,7 @@
           <clr-icon shape="caret down"></clr-icon>
         </button>
         <clr-dropdown-menu *clrIfOpen clrPosition="bottom-right">
+          <a routerLink="/registration" clrDropdownItem>Create new admin</a>
           <a *ngIf="isLoggedIn" (click)="logOut()" clrDropdownItem>Logout</a>
         </clr-dropdown-menu>
       </clr-dropdown>

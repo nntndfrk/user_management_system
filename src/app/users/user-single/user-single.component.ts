@@ -24,7 +24,7 @@ export class UserSingleComponent implements OnInit {
 
   ngOnInit() {
     this.activatedRoute.paramMap.subscribe((params: ParamMap) => {
-      const id = +params.get('id');
+      const id = params.get('id');
       this.service.getUser(id)
         .subscribe(
           user => {
@@ -44,7 +44,7 @@ export class UserSingleComponent implements OnInit {
   }
 
   deleteUser() {
-    this.service.deleteUser(this.user.id)
+    this.service.deleteUser(this.user._id)
       .subscribe(() => {
         this.router.navigate(['/users', {action: 'deleted'}]);
       });

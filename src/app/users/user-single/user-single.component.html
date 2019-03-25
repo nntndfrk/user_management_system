@@ -8,19 +8,18 @@
         </a>
       </div>
       <br/>
-      <img
-        [src]="user.avatar"
-        class="img-rounded"
-        [attr.alt]="user.firstname + user.lastname"
-        [attr.title]="user.firstname + user.lastname"
-      >
-      <p>{{ user.firstname }}</p>
-      <p>{{ user.lastname }}</p>
+      <!--<img-->
+        <!--[src]="user.avatar"-->
+        <!--class="img-rounded"-->
+        <!--[attr.alt]="user.firstName + user.lastName"-->
+        <!--[attr.title]="user.firstName + user.lastName"-->
+      <!--&gt;-->
+      <p>{{ user.firstName }}</p>
+      <p>{{ user.lastName }}</p>
       <p>{{ user.email }}</p>
-      <p>{{ user.job }}</p>
-      <p>{{ user.createdAt | date }}</p>
+
       <div class="btn-group">
-        <a [routerLink]="['/users', user.id, 'edit']" class="btn btn-primary btn-sm">Edit</a>
+        <a [routerLink]="['/users', user._id, 'edit']" class="btn btn-primary btn-sm">Edit</a>
         <a (click)="deleteUser()" class="btn btn-danger btn-sm">Delete</a>
       </div>
     </div>

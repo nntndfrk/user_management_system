@@ -93,7 +93,7 @@
     </div>
 
     <div class="form-group">
-      <label for="email" class="required">Password</label>
+      <label for="email">Password</label>
       <label
         for="email"
         aria-haspopup="true"
@@ -103,19 +103,12 @@
                     (f.password.touched && f.password.dirty )}"
       >
         <input
-          type="text"
+          type="password"
           id="password"
           size="35"
           formControlName="password"
-          required
           autocomplete="off"
         >
-        <span class="tooltip-content" *ngIf="f.password.errors?.required">
-          password field cannot be empty
-        </span>
-        <span class="tooltip-content" *ngIf="f.password.errors?.minlength">
-          field length > 6
-        </span>
       </label>
 
     </div>

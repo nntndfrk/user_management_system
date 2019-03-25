@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 
 import {ReactiveFormsModule} from '@angular/forms';
 import {AppRoutingModule} from './app-routing.module';
@@ -14,6 +14,8 @@ import {AuthService} from './core/services/auth.service';
 import {AuthGuard} from './core/guards/auth.guard';
 import {SharedModule} from './shared/shared.module';
 import {AboutComponent} from './about/about.component';
+import { RegistrationComponent } from './registration/registration.component';
+import {AuthInterceptor} from './core/services/auth-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -21,6 +23,7 @@ import {AboutComponent} from './about/about.component';
     NotFoundComponent,
     LoginComponent,
     AboutComponent,
+    RegistrationComponent,
   ],
   imports: [
     BrowserModule,
@@ -35,6 +38,7 @@ import {AboutComponent} from './about/about.component';
     MessagesService,
     AuthService,
     AuthGuard,
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })

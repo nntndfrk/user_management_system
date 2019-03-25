@@ -1,0 +1,63 @@
+<div class="login-wrapper">
+  <form class="login" [formGroup]="registrationForm" (ngSubmit)="register()">
+    <section class="title">
+      <h3 class="welcome">Here</h3>
+      <h5 class="hint">you can create a new administration profile</h5>
+    </section>
+    <div class="login-group">
+      <label
+        for="email"
+        aria-haspopup="true"
+        role="tooltip"
+        class="tooltip tooltip-validation tooltip-sm"
+        [ngClass]="{invalid: f.email.invalid &&
+                    (f.email.touched && f.email.dirty)}"
+      >
+        <input
+          class="username"
+          type="text"
+          id="email"
+          placeholder="Email"
+          name="name"
+          formControlName="email"
+          required
+          autocomplete="off"
+        >
+        <span class="tooltip-content" *ngIf="f.email.errors?.required">
+          email field cannot be empty
+        </span>
+        <span class="tooltip-content" *ngIf="f.email.errors?.email">
+          non-valid email format
+        </span>
+      </label>
+
+      <label
+        for="password"
+        aria-haspopup="true"
+        role="tooltip"
+        class="tooltip tooltip-validation tooltip-sm"
+        [ngClass]="{invalid: f.password.invalid &&
+                    (f.password.touched && f.password.dirty)}"
+      >
+        <input
+          class="password"
+          type="password"
+          id="password"
+          placeholder="Password"
+          name="password"
+          formControlName="password"
+          required
+          autocomplete="off"
+        >
+        <span class="tooltip-content" *ngIf="f.password.errors?.required">
+          password field cannot be empty
+        </span>
+        <span class="tooltip-content" *ngIf="f.password.errors?.minlength">
+          field length > 6
+        </span>
+      </label>
+
+      <button type="submit" class="btn btn-primary" [disabled]="registrationForm.invalid">Create new administrator</button>
+    </div>
+  </form>
+</div>

@@ -63,8 +63,8 @@ export class UserCreateComponent implements OnInit {
 
     this.editInProgress = false;
     const user: User = {
-      firstname: this.f.firstname.value,
-      lastname: this.f.lastname.value,
+      firstName: this.f.firstname.value,
+      lastName: this.f.lastname.value,
       email: this.f.email.value,
       password: this.f.password.value
     };

@@ -5,13 +5,12 @@ import {AuthService} from '../core/services/auth.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  selector: 'app-registration',
+  templateUrl: './registration.component.html',
+  styleUrls: ['./registration.component.css']
 })
-export class LoginComponent implements OnInit {
-
-  loginForm: FormGroup;
+export class RegistrationComponent implements OnInit {
+  registrationForm: FormGroup;
 
   constructor(
     private authService: AuthService,
@@ -20,20 +19,19 @@ export class LoginComponent implements OnInit {
   ) {
   }
 
-  ngOnInit() {
-    const isLogin = this.authService.isLoggedIn();
-    if (isLogin) {
-      this.router.navigate(['/users']);
-    }
+  get f() {
+    return this.registrationForm.controls;
+  }
 
-    this.loginForm = new FormGroup({
-      email: new FormControl('GavinBelson@hooli.xyz',
+  ngOnInit() {
+    this.registrationForm = new FormGroup({
+      email: new FormControl('',
         [
           Validators.required,
           Validators.email,
         ]
       ),
-      password: new FormControl('admin12345',
+      password: new FormControl('',
         [
           Validators.required,
           Validators.minLength(6)
@@ -42,23 +40,18 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  get f() {
-    return this.loginForm.controls;
-  }
-
-  login() {
-
-    this.authService.login(
+  register() {
+    this.authService.register(
       this.f.email.value,
       this.f.password.value
     ).subscribe(
       () => {
         this.msgService.setMessage({
           type: 'success',
-          body: `${this.f.email.value}, You successfully logged in system. Welcome!`
+          body: `${this.f.email.value}, The new administrator is successfully created on the system`
         });
         setTimeout(() => {
-          this.router.navigate(['/users']);
+          this.router.navigate(['/login']);
         }, 1000);
       },
       err => {
@@ -70,7 +63,5 @@ export class LoginComponent implements OnInit {
     );
   }
 
-  goToRegistration() {
-    this.router.navigate(['/registration']);
-  }
+
 }

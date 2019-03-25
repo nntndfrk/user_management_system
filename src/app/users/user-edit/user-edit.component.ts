@@ -25,16 +25,16 @@ export class UserEditComponent implements OnInit {
 
   ngOnInit() {
     this.activatedRoute.paramMap.subscribe((params: ParamMap) => {
-      const id = +params.get('id');
+      const id = params.get('id');
       this.service.getUser(id)
         .subscribe(
           user => {
             this.user = user;
             this.userForm = new FormGroup({
-              firstname: new FormControl(user.firstname,
+              firstname: new FormControl(user.firstName,
                 [Validators.required, Validators.minLength(2)]
               ),
-              lastname: new FormControl(user.lastname,
+              lastname: new FormControl(user.lastName,
                 [Validators.required, Validators.minLength(2)]
               ),
               email: new FormControl(user.email,
@@ -43,12 +43,7 @@ export class UserEditComponent implements OnInit {
                   Validators.email,
                 ]
               ),
-              password: new FormControl(user.password,
-                [
-                  Validators.required,
-                  Validators.minLength(6)
-                ]
-              )
+              password: new FormControl('')
             });
             this.userForm.valueChanges.subscribe(() => {
               if (this.userForm.touched || this.userForm.dirty) {
@@ -72,8 +67,8 @@ export class UserEditComponent implements OnInit {
 
     this.editInProgress = false;
 
-    this.user.firstname = this.f.firstname.value;
-    this.user.lastname = this.f.lastname.value;
+    this.user.firstName = this.f.firstname.value;
+    this.user.lastName = this.f.lastname.value;
     this.user.email = this.f.email.value;
     this.user.password = this.f.password.value;
 
@@ -85,14 +80,14 @@ export class UserEditComponent implements OnInit {
         });
 
         setTimeout(() => {
-          this.router.navigate(['/users', this.user.id]);
+          this.router.navigate(['/users', this.user._id]);
         }, 3000);
 
       });
   }
 
   goBack() {
-    this.router.navigate(['/users', this.user.id]);
+    this.router.navigate(['/users', this.user._id]);
   }
 
 }
