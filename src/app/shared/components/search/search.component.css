@@ -1,0 +1,22 @@
+.clr-row {
+  margin: 10px 0;
+}
+
+.header {
+  border-radius: .125rem;
+}
+
+label::before {
+  padding-left: 42px;
+}
+
+@media screen and (max-width: 768px) {
+
+  .search {
+    flex: initial;
+    padding-left: 1rem;
+  }
+  .search input {
+    display: inline-block;
+  }
+}

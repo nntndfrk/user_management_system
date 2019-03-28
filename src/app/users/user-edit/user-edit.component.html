@@ -7,7 +7,7 @@
       </a>
     </div>
     <br/>
-    <label>Edit employee</label>
+    <label>{{isCreate ? 'Create' : 'Edit'}} employee</label>
 
     <div class="form-group">
       <label for="firstname" class="required">First Name</label>
@@ -116,7 +116,7 @@
       class="btn btn-primary"
       type="submit"
       [disabled]="userForm.invalid || !editInProgress"
-    >Edit employee
+    >{{isCreate ? 'Create' : 'Edit'}} employee
     </button>
   </section>
 </form>

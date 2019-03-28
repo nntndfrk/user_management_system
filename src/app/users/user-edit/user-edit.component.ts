@@ -1,9 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+
 import {UserService} from '../user.service';
 import {MessagesService} from '../../core/services/messages.service';
 import {User} from '../../core/models/user';
+
 
 @Component({
   selector: 'app-user-edit',
@@ -12,6 +14,7 @@ import {User} from '../../core/models/user';
 })
 export class UserEditComponent implements OnInit {
   editInProgress = false;
+  isCreate = true;
   user: User;
   userForm: FormGroup;
 
@@ -23,37 +26,46 @@ export class UserEditComponent implements OnInit {
   ) {
   }
 
+  createForm() {
+    if (!this.user) {
+      this.user = {firstName: '', lastName: '', email: '', password: ''};
+    }
+
+    this.userForm = new FormGroup({
+      firstname: new FormControl(this.user.firstName,
+        [Validators.required, Validators.minLength(2)]
+      ),
+      lastname: new FormControl(this.user.lastName,
+        [Validators.required, Validators.minLength(2)]
+      ),
+      email: new FormControl(this.user.email,
+        [
+          Validators.required,
+          Validators.email,
+        ]
+      ),
+      password: new FormControl('')
+    });
+
+    this.userForm.valueChanges.subscribe(() => {
+      if (this.userForm.touched || this.userForm.dirty) {
+        this.editInProgress = true;
+      }
+    });
+  }
+
   ngOnInit() {
     this.activatedRoute.paramMap.subscribe((params: ParamMap) => {
       const id = params.get('id');
-      this.service.getUser(id)
-        .subscribe(
-          user => {
-            this.user = user;
-            this.userForm = new FormGroup({
-              firstname: new FormControl(user.firstName,
-                [Validators.required, Validators.minLength(2)]
-              ),
-              lastname: new FormControl(user.lastName,
-                [Validators.required, Validators.minLength(2)]
-              ),
-              email: new FormControl(user.email,
-                [
-                  Validators.required,
-                  Validators.email,
-                ]
-              ),
-              password: new FormControl('')
-            });
-            this.userForm.valueChanges.subscribe(() => {
-              if (this.userForm.touched || this.userForm.dirty) {
-                this.editInProgress = true;
-              }
-            });
-          }
-        );
+      if (!!id) {
+        this.isCreate = false;
+        this.service.getUser(id).subscribe(user => {
+          this.user = user;
+          this.createForm();
+        });
+      }
+      this.createForm();
     });
-
   }
 
   get f() {
@@ -64,7 +76,6 @@ export class UserEditComponent implements OnInit {
     if (this.userForm.invalid) {
       return;
     }
-
     this.editInProgress = false;
 
     this.user.firstName = this.f.firstname.value;
@@ -72,22 +83,24 @@ export class UserEditComponent implements OnInit {
     this.user.email = this.f.email.value;
     this.user.password = this.f.password.value;
 
-    this.service.updateUser(this.user)
+    (this.isCreate ?
+      this.service.createUser(this.user) :
+      this.service.updateUser(this.user))
       .subscribe(() => {
         this.msgService.setMessage({
           type: 'success',
-          body: 'User is successfully edited!'
+          body: 'User is successfully ' + (this.isCreate ? 'created!' : 'edited!')
         });
-
-        setTimeout(() => {
-          this.router.navigate(['/users', this.user._id]);
-        }, 3000);
-
+        this.goBack();
       });
   }
 
   goBack() {
-    this.router.navigate(['/users', this.user._id]);
+    if (this.isCreate) {
+      this.router.navigate(['/users']);
+    } else {
+      this.router.navigate(['/users', this.user._id]);
+    }
   }
 
 }

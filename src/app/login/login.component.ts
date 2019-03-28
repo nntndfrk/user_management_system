@@ -64,7 +64,7 @@ export class LoginComponent implements OnInit {
       err => {
         this.msgService.setMessage({
           type: 'danger',
-          body: err.error.error
+          body: err.error.message
         });
       }
     );

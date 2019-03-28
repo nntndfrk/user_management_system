@@ -1,10 +1,23 @@
-<ng-container *ngIf="users; else spinner">
+<ng-container>
   <div class="jumbotron text-center">
-    <h2>Users list</h2>
+    <h2>Employees list</h2>
     <a routerLink="/users/create" class="btn btn-sm btn-info">Create new employee</a>
   </div>
 
-  <div class="clr-row clr-justify-content-center">
+  <app-search
+    placeholder="search by name"
+    (inputChange)="onInputChange($event)"
+  ></app-search>
+  <app-paginator
+    *ngIf="totalItems"
+    [totalItems]="totalItems"
+    [itemsPerPage]="perPage"
+    (makeStep)="onPaginatorChange($event)"
+  >
+  </app-paginator>
+  <div class="clr-row clr-justify-content-center"
+    *ngIf="users"
+  >
     <div class="clr-col-lg-6 clr-col-12">
       <div class="card" *ngFor="let user of users; trackBy: trackByMethod">
         <div class="card-block">
@@ -31,11 +44,3 @@
     </div>
   </div>
 </ng-container>
-
-<ng-template #spinner>
-  <div class="clr-row clr-justify-content-center">
-    <div class="clr-col-lg-6 clr-col-12">
-      <app-spinner></app-spinner>
-    </div>
-  </div>
-</ng-template>

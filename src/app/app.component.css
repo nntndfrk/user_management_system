@@ -1,0 +1,11 @@
+.app-header {
+  position: relative;
+}
+
+.app-spinner {
+  position: absolute;
+  left: 50vw;
+  top: calc(2.5rem + 24px);
+  transform: translateX(-50%);
+  z-index: 1000;
+}

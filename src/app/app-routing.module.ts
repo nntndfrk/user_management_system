@@ -5,6 +5,7 @@ import {LoginComponent} from './login/login.component';
 import {AuthGuard} from './core/guards/auth.guard';
 import {AboutComponent} from './about/about.component';
 import {RegistrationComponent} from './registration/registration.component';
+import {environment} from '../environments/environment';
 
 const routes: Routes = [
   {
@@ -37,7 +38,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {useHash: environment.useHash})],
   exports: [RouterModule]
 })
 export class AppRoutingModule {

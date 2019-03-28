@@ -1,12 +1,12 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {retry, tap} from 'rxjs/operators';
+import {tap} from 'rxjs/operators';
+import {environment} from '../../../environments/environment';
 
 @Injectable()
 export class AuthService {
-  // use fake api reqres.in
-  private authUrl = '/api';
+  private authUrl = environment.apiLoginUrl;
   private loggedIn = false;
 
   constructor(private http: HttpClient) {
@@ -18,9 +18,8 @@ export class AuthService {
   }
 
   login(username: string, password: string): Observable<any> {
-    return this.http.post(`${this.authUrl}/login/signin`, {email: username, password})
+    return this.http.post(`${this.authUrl}/signin`, {email: username, password})
       .pipe(
-        retry(2),
         tap(res => {
           if (res.token) {
             localStorage.setItem('auth_token', res.token);
@@ -31,7 +30,7 @@ export class AuthService {
   }
 
   register(username: string, password: string): Observable<any> {
-    return this.http.post(`${this.authUrl}/login/signup`, {email: username, password});
+    return this.http.post(`${this.authUrl}/signup`, {email: username, password});
   }
 
   logout() {

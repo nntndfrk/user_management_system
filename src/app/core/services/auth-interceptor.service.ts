@@ -6,15 +6,17 @@ import {
 } from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
-import {tap} from 'rxjs/operators';
+import {delay, tap} from 'rxjs/operators';
+import {SpinnerService} from './spinner.service';
 
 @Injectable()
-export class AuthInterceptor
-  implements HttpInterceptor {
-  intercept(
-    req: HttpRequest<any>,
-    next: HttpHandler
-  ): Observable<HttpEvent<any>> {
+export class AuthInterceptor implements HttpInterceptor {
+
+  constructor(private spinnerService: SpinnerService) {
+  }
+
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    this.spinnerService.showSpinner();
     const token = localStorage.getItem('auth_token');
     const newReq = req.clone({
       setHeaders: {
@@ -22,13 +24,17 @@ export class AuthInterceptor
       }
     });
     return next.handle(newReq).pipe(
+      delay(100),
       tap(
         ev => {
           if (ev instanceof HttpResponse) {
-            console.log(ev); // логирование запросов
+            this.spinnerService.hideSpinner();
           }
         },
-        err => console.error(err) // логирование ошибок
+        err => {
+          console.error(err);
+          this.spinnerService.hideSpinner();
+        }
       )
     );
   }
