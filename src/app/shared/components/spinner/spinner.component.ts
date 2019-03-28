@@ -1,13 +1,13 @@
 import {Component} from '@angular/core';
+import {SpinnerService} from '../../../core/services/spinner.service';
 
 @Component({
   selector: 'app-spinner',
-  template: `
-    <div class="clr-row clr-justify-content-center" style="margin-top: 3rem">
-        <span class="spinner spinner-lg">
-      </span>
-    </div>
-  `
+  template: `<span class="spinner spinner-md spinner-inverse" *ngIf="spinner$ | async"></span>`
 })
 export class SpinnerComponent {
+  constructor(private service: SpinnerService) {
+  }
+
+  spinner$ = this.service.getSpinner();
 }

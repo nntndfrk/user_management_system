@@ -1,0 +1,20 @@
+.clr-row {
+  margin: 10px 0;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  border-radius: .125rem;
+}
+
+.inner {
+  padding-left: 24px;
+}
+
+.left {
+  transform: rotate(-90deg);
+}
+.right {
+  transform: rotate(90deg);
+}

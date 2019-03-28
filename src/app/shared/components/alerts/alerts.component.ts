@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Message} from '../../../core/models/message';
+import {MessageModel} from '../../../core/models/message.model';
 import {MessagesService} from '../../../core/services/messages.service';
 import {Subscription} from 'rxjs';
 
@@ -10,7 +10,7 @@ import {Subscription} from 'rxjs';
 })
 export class AlertsComponent implements OnInit, OnDestroy {
   isShow = false;
-  message: Message;
+  message: MessageModel;
   messages$: Subscription;
 
   constructor(private messagesService: MessagesService) {
@@ -18,7 +18,7 @@ export class AlertsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.messages$ = this.messagesService.getMessages()
-      .subscribe((msg: Message) => {
+      .subscribe((msg: MessageModel) => {
         this.message = msg;
         this.isShow = true;
         if (!msg.action) {

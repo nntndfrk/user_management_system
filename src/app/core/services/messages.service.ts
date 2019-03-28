@@ -1,8 +1,8 @@
 import {Subject} from 'rxjs';
-import {Message} from '../models/message';
+import {MessageModel} from '../models/message.model';
 
 export class MessagesService {
-  private messages$ = new Subject<Message>();
+  private messages$ = new Subject<MessageModel>();
   private submit$ = new Subject<boolean>();
 
   constructor() {
@@ -12,7 +12,7 @@ export class MessagesService {
     return this.messages$.asObservable();
   }
 
-  setMessage(msg: Message) {
+  setMessage(msg: MessageModel) {
     this.messages$.next(msg);
   }
 

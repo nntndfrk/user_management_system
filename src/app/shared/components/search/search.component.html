@@ -1,0 +1,28 @@
+<div class="clr-row clr-justify-content-center">
+  <div class="clr-col-lg-6 clr-col-12">
+    <div class="header header-6">
+      <form class="search">
+        <label for="search_input">
+          <input
+            id="search_input"
+            type="text"
+            [attr.placeholder]="placeholder | titlecase"
+            autocomplete="off"
+            [(ngModel)]="inputValue"
+            [ngModelOptions]="{standalone: true}"
+            #search_input
+          >
+          <button
+            type="button"
+            class="btn btn-icon btn-link btn-sm"
+            *ngIf="inputValue"
+            (click)="clearInput()"
+          >
+            <clr-icon shape="times"></clr-icon>
+          </button>
+        </label>
+      </form>
+    </div>
+  </div>
+</div>
+
