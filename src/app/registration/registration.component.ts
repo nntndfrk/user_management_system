@@ -50,9 +50,7 @@ export class RegistrationComponent implements OnInit {
           type: 'success',
           body: `${this.f.email.value}, The new administrator is successfully created on the system`
         });
-        setTimeout(() => {
-          this.router.navigate(['/login']);
-        }, 1000);
+        this.router.navigate(['/login']);
       },
       err => {
         this.msgService.setMessage({

@@ -57,9 +57,7 @@ export class LoginComponent implements OnInit {
           type: 'success',
           body: `${this.f.email.value}, You successfully logged in system. Welcome!`
         });
-        setTimeout(() => {
-          this.router.navigate(['/users']);
-        }, 1000);
+        this.router.navigate(['/users']);
       },
       err => {
         this.msgService.setMessage({
