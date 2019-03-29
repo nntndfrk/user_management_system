@@ -8,11 +8,12 @@ import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {delay, tap} from 'rxjs/operators';
 import {SpinnerService} from './spinner.service';
+import {AuthService} from './auth.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
-  constructor(private spinnerService: SpinnerService) {
+  constructor(private spinnerService: SpinnerService, private authService: AuthService) {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -32,8 +33,10 @@ export class AuthInterceptor implements HttpInterceptor {
           }
         },
         err => {
-          console.error(err);
-          this.spinnerService.hideSpinner();
+          if (err.status === 401) {
+            this.spinnerService.hideSpinner();
+            this.authService.logout();
+          }
         }
       )
     );
