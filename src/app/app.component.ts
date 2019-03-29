@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 
 import {AuthService} from './core/services/auth.service';
@@ -9,12 +9,24 @@ import {MessagesService} from './core/services/messages.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private router: Router,
     private msgService: MessagesService
   ) {
+  }
+
+  ngOnInit(): void {
+    this.authService.getLoginBus().subscribe(status => {
+      if (!status) {
+        this.msgService.setMessage({
+          type: 'warning',
+          body: 'Session is out of time'
+        });
+        this.logOut();
+      }
+    });
   }
 
   get isLoggedIn() {
@@ -27,12 +39,6 @@ export class AppComponent {
         if (isNavigate) {
           this.authService.logout();
         }
-      })
-      .catch((err) => {
-        this.msgService.setMessage({
-          type: 'danger',
-          body: err
-        });
       });
   }
 }
