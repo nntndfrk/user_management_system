@@ -60,8 +60,9 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['/users']);
       },
       err => {
+        console.dir(err);
         this.msgService.setMessage({
-          type: 'danger',
+          type: 'warning',
           body: err.error.message
         });
       }
