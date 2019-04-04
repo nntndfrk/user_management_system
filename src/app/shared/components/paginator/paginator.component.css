@@ -6,6 +6,7 @@
   display: flex;
   align-items: center;
   border-radius: .125rem;
+  position: relative;
 }
 
 .inner {
@@ -17,4 +18,34 @@
 }
 .right {
   transform: rotate(90deg);
+}
+.half-turnover {
+  transform: rotate(180deg);
+}
+
+.full-turnover {
+  transform: rotate(360deg);
+}
+
+.btn-group-paginator {
+  display: inline-block;
+  position: absolute;
+  right: 0;
+  top: 0.5rem;
+}
+
+.per-page-paginator {
+  display: inline-block;
+  position: absolute;
+  right: 200px;
+  top: -0.25rem;
+}
+
+.clr-form-control {
+  display: inline-block !important;
+}
+
+.clr-control-label {
+  margin-right: 0.1rem;
+  display: inline-block !important;
 }

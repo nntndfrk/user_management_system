@@ -3,6 +3,7 @@ import {pluck, tap} from 'rxjs/operators';
 
 import {User} from '../../core/models/user';
 import {UserService} from '../user.service';
+import {Page} from '../../core/models/page.model';
 
 @Component({
   selector: 'app-users-list',
@@ -41,8 +42,9 @@ export class UsersListComponent implements OnInit {
     this.getUsers();
   }
 
-  onPaginatorChange(pageNumber) {
-    this.page = pageNumber;
+  onPaginatorChange(page: Page) {
+    this.page = page.pageNumber;
+    this.perPage = page.perPage;
     this.getUsers();
   }
 

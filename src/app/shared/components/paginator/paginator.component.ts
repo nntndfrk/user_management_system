@@ -12,7 +12,8 @@ import {Page} from '../../../core/models/page.model';
 export class PaginatorComponent implements OnInit, OnChanges {
   @Input() totalItems: number;
   @Input() itemsPerPage: number;
-  @Output() makeStep = new EventEmitter<number>();
+  @Input() paginatorSteps = [1, 2, 5];
+  @Output() makeStep = new EventEmitter<Page>();
   page: Page;
 
   constructor(private paginatorService: PaginatorService) {
@@ -20,25 +21,43 @@ export class PaginatorComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.page = this.paginatorService.init(this.totalItems, this.itemsPerPage);
-    this.makeStep.emit(this.page.pageNumber);
+    this.makeStep.emit(this.page);
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.totalItems.currentValue || !changes.totalItems.firstChange) {
+    if (
+      changes.totalItems
+      && (changes.totalItems.currentValue || !changes.totalItems.firstChange)
+    ) {
       this.totalItems = changes.totalItems.currentValue;
       this.page = this.paginatorService.init(this.totalItems, this.itemsPerPage);
-      this.makeStep.emit(this.page.pageNumber);
+      this.makeStep.emit(this.page);
     }
+  }
+
+  onSelectPerPage() {
+    this.page = this.paginatorService.init(this.totalItems, this.itemsPerPage);
+    this.makeStep.emit(this.page);
   }
 
   stepForward() {
     this.page = this.paginatorService.stepForward();
-    this.makeStep.emit(this.page.pageNumber);
+    this.makeStep.emit(this.page);
   }
 
   stepBack() {
     this.page = this.paginatorService.stepBack();
-    this.makeStep.emit(this.page.pageNumber);
+    this.makeStep.emit(this.page);
+  }
+
+  stepEnd() {
+    this.page = this.paginatorService.stepEnd();
+    this.makeStep.emit(this.page);
+  }
+
+  stepStart() {
+    this.page = this.paginatorService.stepStart();
+    this.makeStep.emit(this.page);
   }
 
 }

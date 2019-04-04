@@ -12,6 +12,7 @@
     *ngIf="totalItems"
     [totalItems]="totalItems"
     [itemsPerPage]="perPage"
+    [paginatorSteps]="[2, 4, 6]"
     (makeStep)="onPaginatorChange($event)"
   >
   </app-paginator>

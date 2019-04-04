@@ -3,22 +3,51 @@
     <div class="header header-6">
       <div class="inner">
         {{page.pageDescription}} of {{totalItems}}
-        <button
-          type="button"
-          class="btn btn-icon btn-link btn-sm"
-          (click)="stepBack()"
-          [disabled]="page.isFirst"
-        >
-          <clr-icon shape="angle" class="left"></clr-icon>
-        </button>
-        <button
-          type="button"
-          class="btn btn-icon btn-link btn-sm"
-          (click)="stepForward()"
-          [disabled]="page.isLast"
-        >
-          <clr-icon shape="angle" class="right"></clr-icon>
-        </button>
+
+        <div class="per-page-paginator">
+          <clr-select-container>
+            <label for="per-page">Items per page:</label>
+            <select clrSelect name="options" [(ngModel)]="itemsPerPage" id="per-page" (change)="onSelectPerPage()">
+              <ng-container *ngFor="let paginatorStep of paginatorSteps">
+                <option [value]="paginatorStep">{{paginatorStep}}</option>
+              </ng-container>
+            </select>
+          </clr-select-container>
+        </div>
+        <div class="btn-group-paginator">
+          <button
+            type="button"
+            class="btn btn-icon btn-link btn-sm"
+            (click)="stepStart()"
+            [disabled]="page.isFirst"
+          >
+            <clr-icon shape="step-forward-2" class="half-turnover"></clr-icon>
+          </button>
+          <button
+            type="button"
+            class="btn btn-icon btn-link btn-sm"
+            (click)="stepBack()"
+            [disabled]="page.isFirst"
+          >
+            <clr-icon shape="angle" class="left"></clr-icon>
+          </button>
+          <button
+            type="button"
+            class="btn btn-icon btn-link btn-sm"
+            (click)="stepForward()"
+            [disabled]="page.isLast"
+          >
+            <clr-icon shape="angle" class="right"></clr-icon>
+          </button>
+          <button
+            type="button"
+            class="btn btn-icon btn-link btn-sm"
+            (click)="stepEnd()"
+            [disabled]="page.isLast"
+          >
+            <clr-icon shape="step-forward-2" class="full-turnover"></clr-icon>
+          </button>
+        </div>
       </div>
     </div>
   </div>
