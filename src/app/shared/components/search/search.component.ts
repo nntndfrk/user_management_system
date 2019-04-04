@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, ElementRef, EventEmitter, Input, OnDestroy, Output, ViewChild} from '@angular/core';
 import {fromEvent, Subscription} from 'rxjs';
-import {debounceTime, distinctUntilChanged, pluck} from 'rxjs/operators';
+import {debounceTime, distinctUntilChanged, filter, pluck} from 'rxjs/operators';
 
 @Component({
   selector: 'app-search',
@@ -18,6 +18,7 @@ export class SearchComponent implements AfterViewInit, OnDestroy {
     this.inputChange$ = fromEvent(this.input.nativeElement, 'input')
       .pipe(
         pluck('target', 'value'),
+        filter((value: string) => value.length > 2 || value.length === 0),
         debounceTime(500),
         distinctUntilChanged()
       )

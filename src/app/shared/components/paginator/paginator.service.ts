@@ -30,9 +30,26 @@ export class PaginatorService {
     return this.getPage();
   }
 
+  stepEnd(): Page {
+    if (this.currentStep < this.totalPages) {
+      this.currentStep = this.totalPages;
+    }
+    return this.getPage();
+  }
+
+  stepStart(): Page {
+    if (this.currentStep > 1) {
+      this.currentStep = 1;
+    }
+    return this.getPage();
+  }
+
+  // TODO: implement step to page
+
   getPage(): Page {
     return {
       pageNumber: this.currentStep,
+      perPage: this.perPage,
       isFirst: (this.currentStep === 1),
       isLast: (this.currentStep === this.totalPages),
       pageDescription: this.getPageDescription()
